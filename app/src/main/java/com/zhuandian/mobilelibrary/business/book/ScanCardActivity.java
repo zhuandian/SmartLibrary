@@ -1,9 +1,14 @@
 package com.zhuandian.mobilelibrary.business.book;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhuandian.mobilelibrary.R;
 import com.zhuandian.mobilelibrary.base.BaseActivity;
+import com.zhuandian.mobilelibrary.entity.BookEntity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +16,15 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * desc :
@@ -22,13 +34,13 @@ import butterknife.BindView;
 public class ScanCardActivity extends BaseActivity {
 
     @BindView(R.id.card_number)
-    TextView cardNumber;
+    EditText cardNumber;
+    private String cardId;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_scan_card;
     }
-
-
 
 
     @Override
@@ -67,7 +79,14 @@ public class ScanCardActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        cardNumber.setText(clientContent);
+                        String[] split = clientContent.split("=");
+                        if (split != null) {
+                            cardId = split[1];
+                        }
+                        cardNumber.setText(cardId);
+
+
+                        upDateBookState(cardId);
                     }
                 });
 
@@ -87,4 +106,45 @@ public class ScanCardActivity extends BaseActivity {
         }
     }
 
+    private void upDateBookState(String cardId) {
+        BmobQuery<BookEntity> query = new BmobQuery<>();
+        query.addWhereEqualTo("bookId", Long.valueOf(cardId));
+        query.findObjects(new FindListener<BookEntity>() {
+            @Override
+            public void done(List<BookEntity> list, BmobException e) {
+                if (e == null) {
+                    BookEntity bookEntity = list.get(0);
+                    if (bookEntity.getBookState() == 1) {
+                        bookEntity.setBookState(2);
+                    } else if (bookEntity.getBookState() == 2) {
+                        bookEntity.setBookState(1);
+                    }
+                    bookEntity.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                Toast.makeText(ScanCardActivity.this, "同步借阅信息成功...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+    @OnClick({R.id.tv_update_state, R.id.tv_update_by_hand})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_update_by_hand:
+                upDateBookState(cardNumber.getText().toString());
+                break;
+            case R.id.tv_update_state:
+                Toast.makeText(ScanCardActivity.this, "请在读取区域刷卡...", Toast.LENGTH_SHORT).show();
+                runServer();
+                break;
+
+        }
+
+    }
 }

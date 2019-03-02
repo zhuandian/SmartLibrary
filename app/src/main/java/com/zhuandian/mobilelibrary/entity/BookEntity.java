@@ -12,6 +12,16 @@ public class BookEntity extends BmobObject {
     private int bookState;
     private String bookName;
     private String bookDesc;
+    private String bookImgUrl;
+
+
+    public String getBookImgUrl() {
+        return bookImgUrl;
+    }
+
+    public void setBookImgUrl(String bookImgUrl) {
+        this.bookImgUrl = bookImgUrl;
+    }
 
     public long getBookId() {
         return bookId;

@@ -9,13 +9,30 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_update_state"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="点击刷卡读取借阅卡信息："
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/card_number"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="卡号是：" />
+        android:layout_margin="15dp"
+        android:hint="若刷卡为成功，可手动输入id号码"
+        android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/card_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:id="@+id/tv_update_by_hand"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="输入ID号手动更新借阅信息"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
 </LinearLayout>
