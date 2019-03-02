@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zhuandian.mobilelibrary.adapter.BookListAdapter;
@@ -29,6 +30,7 @@ public class MainActivity extends BaseActivity {
     RecyclerView rvList;
     @BindView(R.id.tv_scan)
     TextView tvScan;
+    private boolean isLimit = false;
 
     @Override
     protected int getLayoutId() {
@@ -42,6 +44,10 @@ public class MainActivity extends BaseActivity {
 
     private void getAllBooKList() {
         BmobQuery<BookEntity> bmobQuery = new BmobQuery<>();
+        if (isLimit) {
+            bmobQuery.addWhereEqualTo("bookState", 1);
+            isLimit = false;
+        }
         bmobQuery.findObjects(new FindListener<BookEntity>() {
             @Override
             public void done(List<BookEntity> list, final BmobException e) {
@@ -71,8 +77,17 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.tv_scan)
-    public void onClick() {
-        startActivity(new Intent(this, ScanCardActivity.class));
+    @OnClick({R.id.tv_scan, R.id.tv_my_list})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_scan:
+                startActivity(new Intent(this, ScanCardActivity.class));
+                break;
+            case R.id.tv_my_list:
+                isLimit = true;
+                getAllBooKList();
+                break;
+        }
+
     }
 }
