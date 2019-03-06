@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhuandian.mobilelibrary.adapter.BookListAdapter;
 import com.zhuandian.mobilelibrary.base.BaseActivity;
@@ -68,6 +69,11 @@ public class MainActivity extends BaseActivity {
                                 }
                             }
                         });
+                    }
+
+                    @Override
+                    public void onClickBorrow(BookEntity bookEntity) {
+                        Toast.makeText(MainActivity.this, "续借成功，还书周期自动延长30天...", Toast.LENGTH_SHORT).show();
                     }
                 }));
                 rvList.setLayoutManager(new LinearLayoutManager(MainActivity.this));

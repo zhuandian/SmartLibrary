@@ -35,7 +35,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
 
     private OnStateTextClickListener stateTextClickListener;
 
-    public BookListAdapter(List<BookEntity> mDatas,OnStateTextClickListener stateTextClickListener) {
+    public BookListAdapter(List<BookEntity> mDatas, OnStateTextClickListener stateTextClickListener) {
         this.mDatas = mDatas;
         this.stateTextClickListener = stateTextClickListener;
     }
@@ -54,11 +54,20 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
         viewHolder.tvBookState.setText(mDatas.get(i).getBookState() == 1 ? "借阅" : "未借");
         viewHolder.tvBookDesc.setText(mDatas.get(i).getBookDesc());
         viewHolder.tvBookTime.setText(mDatas.get(i).getCreatedAt());
+        viewHolder.tvBookBorrow.setVisibility(mDatas.get(i).getBookState() == 1 ? View.VISIBLE : View.GONE);
         viewHolder.tvBookState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stateTextClickListener!=null){
+                if (stateTextClickListener != null) {
                     stateTextClickListener.onClick(mDatas.get(i));
+                }
+            }
+        });
+        viewHolder.tvBookBorrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stateTextClickListener != null) {
+                    stateTextClickListener.onClickBorrow(mDatas.get(i));
                 }
             }
         });
@@ -80,6 +89,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
         TextView tvBookTime;
         @BindView(R.id.tv_book_state)
         TextView tvBookState;
+        @BindView(R.id.tv_book_borrow)
+        TextView tvBookBorrow;
 
         public BooKViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,7 +98,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
         }
     }
 
-    public interface OnStateTextClickListener{
+    public interface OnStateTextClickListener {
         void onClick(BookEntity bookEntity);
+
+        void onClickBorrow(BookEntity bookEntity);
+
     }
 }
