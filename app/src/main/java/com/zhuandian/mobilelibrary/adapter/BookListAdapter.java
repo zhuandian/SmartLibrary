@@ -51,7 +51,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
     public void onBindViewHolder(@NonNull BookListAdapter.BooKViewHolder viewHolder, final int i) {
         Glide.with(context).load(mDatas.get(i).getBookImgUrl()).into(viewHolder.ivBookImg);
         viewHolder.tvBookName.setText(mDatas.get(i).getBookName());
-        viewHolder.tvBookState.setText(mDatas.get(i).getBookState() == 1 ? "借阅" : "未借");
+        viewHolder.tvBookState.setText(mDatas.get(i).getBookState() == 1 ? "已借阅" : "未借");
         viewHolder.tvBookDesc.setText(mDatas.get(i).getBookDesc());
         viewHolder.tvBookTime.setText(mDatas.get(i).getCreatedAt());
         viewHolder.tvBookBorrow.setVisibility(mDatas.get(i).getBookState() == 1 ? View.VISIBLE : View.GONE);

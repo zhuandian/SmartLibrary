@@ -9,7 +9,7 @@ import cn.bmob.v3.BmobObject;
  */
 public class BookEntity extends BmobObject {
     private long bookId;
-    private int bookState;
+    private int bookState;  //1 .已经借阅   2.未借阅
     private String bookName;
     private String bookDesc;
     private String bookImgUrl;

@@ -1,39 +1,32 @@
-package com.zhuandian.mobilelibrary;
+package com.zhuandian.mobilelibrary.business.book;
 
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zhuandian.mobilelibrary.MainActivity;
+import com.zhuandian.mobilelibrary.R;
 import com.zhuandian.mobilelibrary.adapter.BookListAdapter;
 import com.zhuandian.mobilelibrary.base.BaseActivity;
-import com.zhuandian.mobilelibrary.business.book.RecommendBookActivity;
-import com.zhuandian.mobilelibrary.business.book.RentBookAcitvity;
 import com.zhuandian.mobilelibrary.entity.BookEntity;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-
-public class MainActivity extends BaseActivity {
+public class RentBookAcitvity extends BaseActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
-    @BindView(R.id.tv_scan)
-    TextView tvScan;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_rent_book_acitvity;
     }
 
     @Override
@@ -41,8 +34,10 @@ public class MainActivity extends BaseActivity {
         getAllBooKList();
     }
 
+
     private void getAllBooKList() {
         BmobQuery<BookEntity> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("bookState", 1);
         bmobQuery.findObjects(new FindListener<BookEntity>() {
             @Override
             public void done(List<BookEntity> list, final BmobException e) {
@@ -67,26 +62,12 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onClickBorrow(BookEntity bookEntity) {
-                        Toast.makeText(MainActivity.this, "续借成功，还书周期自动延长30天...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RentBookAcitvity.this, "续借成功，还书周期自动延长30天...", Toast.LENGTH_SHORT).show();
                     }
                 }));
-                rvList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                rvList.setLayoutManager(new LinearLayoutManager(RentBookAcitvity.this));
             }
         });
-
-    }
-
-
-    @OnClick({R.id.tv_scan, R.id.tv_my_list})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_scan:
-                startActivity(new Intent(MainActivity.this, RecommendBookActivity.class));
-                break;
-            case R.id.tv_my_list:
-                startActivity(new Intent(MainActivity.this, RentBookAcitvity.class));
-                break;
-        }
 
     }
 }

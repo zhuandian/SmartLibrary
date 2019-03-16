@@ -20,7 +20,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/shape_round_button"
         android:gravity="center"
-        android:text="借阅"
+        android:text="推荐\n书单"
         android:textColor="@color/white" />
 
     <TextView
@@ -33,6 +33,6 @@
         android:layout_margin="20dp"
         android:background="@drawable/shape_round_button"
         android:gravity="center"
-        android:text="书单"
+        android:text="我的\n借阅"
         android:textColor="@color/white" />
 </RelativeLayout>
