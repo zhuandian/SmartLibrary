@@ -8,8 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.zhuandian.mobilelibrary.MainActivity;
 import com.zhuandian.mobilelibrary.R;
+import com.zhuandian.mobilelibrary.Utils.Constant;
 import com.zhuandian.mobilelibrary.base.BaseActivity;
 import com.zhuandian.mobilelibrary.entity.UserEntity;
 
@@ -62,11 +62,15 @@ public class LoginActivity extends BaseActivity {
             UserEntity userEntity = new UserEntity();
             userEntity.setUsername(userName);
             userEntity.setPassword(passWord);
-            userEntity.login(new SaveListener<Object>() {
+            userEntity.login(new SaveListener<UserEntity>() {
                 @Override
-                public void done(Object o, BmobException e) {
+                public void done(UserEntity userEntity, BmobException e) {
                     if (e == null) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        Constant.ROLE_ID = userEntity.getRoleId(); //刷新登陆用户roleId
+                        Constant.IS_USRE_LOGIN = true;
+                        setResult(Constant.LOGIN_SUCCESS);
+//                        startActivity(new Intent(LoginActivity.this, BookListActivity.class));
+
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "登陆失败...", Toast.LENGTH_SHORT).show();

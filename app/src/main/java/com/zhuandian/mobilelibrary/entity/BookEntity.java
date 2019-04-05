@@ -13,7 +13,33 @@ public class BookEntity extends BmobObject {
     private String bookName;
     private String bookDesc;
     private String bookImgUrl;
+    private String bookType;
+    private int totalRentCount;
+    private int isAvailable; // 1.未报废 2.图书已报废
 
+    public int getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(int isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
+    public int getTotalRentCount() {
+        return totalRentCount;
+    }
+
+    public void setTotalRentCount(int totalRentCount) {
+        this.totalRentCount = totalRentCount;
+    }
+
+    public String getBookType() {
+        return bookType;
+    }
+
+    public void setBookType(String bookType) {
+        this.bookType = bookType;
+    }
 
     public String getBookImgUrl() {
         return bookImgUrl;

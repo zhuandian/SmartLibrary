@@ -51,9 +51,18 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
     public void onBindViewHolder(@NonNull BookListAdapter.BooKViewHolder viewHolder, final int i) {
         Glide.with(context).load(mDatas.get(i).getBookImgUrl()).into(viewHolder.ivBookImg);
         viewHolder.tvBookName.setText(mDatas.get(i).getBookName());
-        viewHolder.tvBookState.setText(mDatas.get(i).getBookState() == 1 ? "已借阅" : "未借");
+        viewHolder.tvBookState.setText(mDatas.get(i).getBookState() == 1 ? "还书" : "未借");
         viewHolder.tvBookDesc.setText(mDatas.get(i).getBookDesc());
         viewHolder.tvBookTime.setText(mDatas.get(i).getCreatedAt());
+        if (mDatas.get(i).getIsAvailable() == 1) { //图书可借阅
+            viewHolder.tvBookSoldOut.setVisibility(View.GONE);
+            viewHolder.tvBookState.setVisibility(View.VISIBLE);
+            viewHolder.tvBookBorrow.setVisibility(View.VISIBLE);
+        } else { //图书已报废，不可借
+            viewHolder.tvBookSoldOut.setVisibility(View.VISIBLE);
+            viewHolder.tvBookState.setVisibility(View.GONE);
+            viewHolder.tvBookBorrow.setVisibility(View.GONE);
+        }
         viewHolder.tvBookBorrow.setVisibility(mDatas.get(i).getBookState() == 1 ? View.VISIBLE : View.GONE);
         viewHolder.tvBookState.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +100,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
         TextView tvBookState;
         @BindView(R.id.tv_book_borrow)
         TextView tvBookBorrow;
+        @BindView(R.id.tv_book_sold_out)
+        TextView tvBookSoldOut;
 
         public BooKViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.zhuandian.mobilelibrary.MainActivity;
 import com.zhuandian.mobilelibrary.R;
 import com.zhuandian.mobilelibrary.adapter.BookListAdapter;
 import com.zhuandian.mobilelibrary.base.BaseActivity;
@@ -44,7 +43,7 @@ public class RentBookAcitvity extends BaseActivity {
                 list.addAll(list);
                 rvList.setAdapter(new BookListAdapter(list, new BookListAdapter.OnStateTextClickListener() {
                     @Override
-                    public void onClick(BookEntity bookEntity) {
+                    public void onClick(final BookEntity bookEntity) {
                         if (bookEntity.getBookState() == 1) {
                             bookEntity.setBookState(2);
                         } else if (bookEntity.getBookState() == 2) {
@@ -54,6 +53,7 @@ public class RentBookAcitvity extends BaseActivity {
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
+                                    Toast.makeText(RentBookAcitvity.this, String.format("%s 成功...", bookEntity.getBookState() == 2 ? "还书" : "借阅"), Toast.LENGTH_SHORT).show();
                                     getAllBooKList();
                                 }
                             }

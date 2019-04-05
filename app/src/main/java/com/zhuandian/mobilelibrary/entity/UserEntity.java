@@ -10,6 +10,15 @@ import cn.bmob.v3.BmobUser;
 public class UserEntity extends BmobUser {
     private String nikeName;
     private String userInfo;
+    private int roleId;
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
 
     public String getNikeName() {
         return nikeName;

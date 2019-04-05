@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".business.book.BookListActivity">
 
     <TextView
         android:id="@+id/tv_update_state"
