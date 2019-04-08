@@ -16,6 +16,15 @@ public class BookEntity extends BmobObject {
     private String bookType;
     private int totalRentCount;
     private int isAvailable; // 1.未报废 2.图书已报废
+    private int isOverdue;   //2 逾期 1.正常
+
+    public int getIsOverdue() {
+        return isOverdue;
+    }
+
+    public void setIsOverdue(int isOverdue) {
+        this.isOverdue = isOverdue;
+    }
 
     public int getIsAvailable() {
         return isAvailable;

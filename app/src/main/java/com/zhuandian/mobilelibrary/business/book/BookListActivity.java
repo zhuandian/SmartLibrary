@@ -58,7 +58,8 @@ public class BookListActivity extends BaseActivity {
                                     @Override
                                     public void done(BmobException e) {
                                         if (e == null) {
-                                            Toast.makeText(BookListActivity.this, String.format("%s 成功...", bookEntity.getBookState() == 2 ? "还书" : "借阅"), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(BookListActivity.this, String.format("%s %s 成功...",
+                                                    bookEntity.getIsOverdue() == 1 ? "" : "逾期", bookEntity.getBookState() == 2 ? "还书" : "借阅"), Toast.LENGTH_SHORT).show();
                                             getAllBooKList();
                                         }
                                     }
