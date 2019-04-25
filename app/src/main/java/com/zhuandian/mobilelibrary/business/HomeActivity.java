@@ -21,11 +21,14 @@ import com.zhuandian.mobilelibrary.base.BaseActivity;
 import com.zhuandian.mobilelibrary.business.book.BookDetailActivity;
 import com.zhuandian.mobilelibrary.business.book.BookListActivity;
 import com.zhuandian.mobilelibrary.business.book.RentBookAcitvity;
+import com.zhuandian.mobilelibrary.business.book.SearchResultActivity;
 import com.zhuandian.mobilelibrary.business.login.LoginActivity;
 import com.zhuandian.mobilelibrary.entity.BookEntity;
 import com.zhuandian.mobilelibrary.entity.UserEntity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,12 +49,15 @@ public class HomeActivity extends BaseActivity {
     TextView tvCategary;
     @BindView(R.id.banner)
     Banner banner;
-    @BindView(R.id.iv_hot_book)
-    ImageView ivHotBook;
+    @BindView(R.id.iv_hot_book1)
+    ImageView ivHotBook1;
+    @BindView(R.id.iv_hot_book2)
+    ImageView ivHotBook2;
     @BindView(R.id.tv_recommend)
     TextView tvRecommend;
     @BindView(R.id.tv_my_list)
     TextView tvMyList;
+    private BookEntity hotBook1, hotBook2;
 
     @Override
     protected int getLayoutId() {
@@ -68,16 +74,49 @@ public class HomeActivity extends BaseActivity {
         BmobQuery<BookEntity> query = new BmobQuery<>();
         query.findObjects(new FindListener<BookEntity>() {
             @Override
-            public void done(List<BookEntity> list, BmobException e) {
+            public void done(final List<BookEntity> list, BmobException e) {
                 int hotBookIndex = 0;
                 int currentRentCount = 0;
+
+                //遍历出借阅量最多的书
                 for (int i = 0; i < list.size(); i++) {
                     if (currentRentCount < list.get(i).getTotalRentCount()) {
                         currentRentCount = list.get(i).getTotalRentCount();
                         hotBookIndex = i;
+                        hotBook1 = list.get(i);
                     }
                 }
-                Glide.with(HomeActivity.this).load(list.get(hotBookIndex).getBookImgUrl()).into(ivHotBook);
+                Glide.with(HomeActivity.this).load(list.get(hotBookIndex).getBookImgUrl()).into(ivHotBook1);
+
+                ivHotBook1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(HomeActivity.this, SearchResultActivity.class);
+                        intent.putExtra("entity", hotBook1);
+                        startActivity(intent);
+                    }
+                });
+
+                //遍历出借阅量第二多的书
+                list.remove(hotBookIndex);
+                currentRentCount = 0;
+                for (int i = 0; i < list.size(); i++) {
+                    if (currentRentCount < list.get(i).getTotalRentCount()) {
+                        currentRentCount = list.get(i).getTotalRentCount();
+                        hotBookIndex = i;
+                        hotBook2 = list.get(i);
+                    }
+                }
+                Glide.with(HomeActivity.this).load(list.get(hotBookIndex).getBookImgUrl()).into(ivHotBook2);
+                ivHotBook2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(HomeActivity.this, SearchResultActivity.class);
+                        intent.putExtra("entity", hotBook2);
+                        startActivity(intent);
+                    }
+                });
+
             }
         });
     }

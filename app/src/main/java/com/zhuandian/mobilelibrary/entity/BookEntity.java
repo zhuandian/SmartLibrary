@@ -14,9 +14,28 @@ public class BookEntity extends BmobObject {
     private String bookDesc;
     private String bookImgUrl;
     private String bookType;
+    private String author; //作者
+    private String companyName;// 出版社
     private int totalRentCount;
     private int isAvailable; // 1.未报废 2.图书已报废
     private int isOverdue;   //2 逾期 1.正常
+
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public int getIsOverdue() {
         return isOverdue;

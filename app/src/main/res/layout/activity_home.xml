@@ -79,12 +79,27 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/iv_hot_book"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="fitXY"
-            android:layout_margin="5dp" />
+            android:layout_height="150dp">
+
+            <ImageView
+                android:id="@+id/iv_hot_book1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/iv_hot_book2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
