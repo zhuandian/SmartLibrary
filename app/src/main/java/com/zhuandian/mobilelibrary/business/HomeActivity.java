@@ -3,6 +3,7 @@ package com.zhuandian.mobilelibrary.business;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,17 +25,14 @@ import com.zhuandian.mobilelibrary.business.book.RentBookAcitvity;
 import com.zhuandian.mobilelibrary.business.book.SearchResultActivity;
 import com.zhuandian.mobilelibrary.business.login.LoginActivity;
 import com.zhuandian.mobilelibrary.entity.BookEntity;
-import com.zhuandian.mobilelibrary.entity.UserEntity;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -57,6 +55,10 @@ public class HomeActivity extends BaseActivity {
     TextView tvRecommend;
     @BindView(R.id.tv_my_list)
     TextView tvMyList;
+    @BindView(R.id.tv_hot_book_name1)
+    TextView tvHotBookName1;
+    @BindView(R.id.tv_hot_book_name2)
+    TextView tvHotBookName2;
     private BookEntity hotBook1, hotBook2;
 
     @Override
@@ -86,6 +88,7 @@ public class HomeActivity extends BaseActivity {
                         hotBook1 = list.get(i);
                     }
                 }
+                tvHotBookName1.setText(list.get(hotBookIndex).getBookName());
                 Glide.with(HomeActivity.this).load(list.get(hotBookIndex).getBookImgUrl()).into(ivHotBook1);
 
                 ivHotBook1.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +110,7 @@ public class HomeActivity extends BaseActivity {
                         hotBook2 = list.get(i);
                     }
                 }
+                tvHotBookName2.setText(list.get(hotBookIndex).getBookName());
                 Glide.with(HomeActivity.this).load(list.get(hotBookIndex).getBookImgUrl()).into(ivHotBook2);
                 ivHotBook2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -209,4 +213,6 @@ public class HomeActivity extends BaseActivity {
                 break;
         }
     }
+
+
 }
