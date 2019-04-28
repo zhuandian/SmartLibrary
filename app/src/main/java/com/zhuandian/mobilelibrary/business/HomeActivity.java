@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +20,8 @@ import com.youth.banner.BannerConfig;
 import com.zhuandian.mobilelibrary.R;
 import com.zhuandian.mobilelibrary.Utils.Constant;
 import com.zhuandian.mobilelibrary.Utils.GlideImageLoader;
+import com.zhuandian.mobilelibrary.adapter.BookListAdapter;
+import com.zhuandian.mobilelibrary.adapter.HotBookAdapter;
 import com.zhuandian.mobilelibrary.base.BaseActivity;
 import com.zhuandian.mobilelibrary.business.book.BookDetailActivity;
 import com.zhuandian.mobilelibrary.business.book.BookListActivity;
@@ -27,6 +31,8 @@ import com.zhuandian.mobilelibrary.business.login.LoginActivity;
 import com.zhuandian.mobilelibrary.entity.BookEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,19 +53,12 @@ public class HomeActivity extends BaseActivity {
     TextView tvCategary;
     @BindView(R.id.banner)
     Banner banner;
-    @BindView(R.id.iv_hot_book1)
-    ImageView ivHotBook1;
-    @BindView(R.id.iv_hot_book2)
-    ImageView ivHotBook2;
     @BindView(R.id.tv_recommend)
     TextView tvRecommend;
     @BindView(R.id.tv_my_list)
     TextView tvMyList;
-    @BindView(R.id.tv_hot_book_name1)
-    TextView tvHotBookName1;
-    @BindView(R.id.tv_hot_book_name2)
-    TextView tvHotBookName2;
-    private BookEntity hotBook1, hotBook2;
+    @BindView(R.id.rv_list)
+    RecyclerView hotBookList;
 
     @Override
     protected int getLayoutId() {
@@ -77,49 +76,25 @@ public class HomeActivity extends BaseActivity {
         query.findObjects(new FindListener<BookEntity>() {
             @Override
             public void done(final List<BookEntity> list, BmobException e) {
-                int hotBookIndex = 0;
-                int currentRentCount = 0;
-
-                //遍历出借阅量最多的书
-                for (int i = 0; i < list.size(); i++) {
-                    if (currentRentCount < list.get(i).getTotalRentCount()) {
-                        currentRentCount = list.get(i).getTotalRentCount();
-                        hotBookIndex = i;
-                        hotBook1 = list.get(i);
-                    }
-                }
-                tvHotBookName1.setText(list.get(hotBookIndex).getBookName());
-                Glide.with(HomeActivity.this).load(list.get(hotBookIndex).getBookImgUrl()).into(ivHotBook1);
-
-                ivHotBook1.setOnClickListener(new View.OnClickListener() {
+                Collections.sort(list, new Comparator<BookEntity>() {
                     @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(HomeActivity.this, SearchResultActivity.class);
-                        intent.putExtra("entity", hotBook1);
-                        startActivity(intent);
+                    public int compare(BookEntity o1, BookEntity o2) {
+//                         *返回负数表示：o1 小于o2，
+//                         *返回0 表示：o1和o2相等，
+//                         *返回正数表示：o1大于o2。
+                        return o2.getTotalRentCount() - o1.getTotalRentCount();
                     }
                 });
 
-                //遍历出借阅量第二多的书
-                list.remove(hotBookIndex);
-                currentRentCount = 0;
-                for (int i = 0; i < list.size(); i++) {
-                    if (currentRentCount < list.get(i).getTotalRentCount()) {
-                        currentRentCount = list.get(i).getTotalRentCount();
-                        hotBookIndex = i;
-                        hotBook2 = list.get(i);
-                    }
-                }
-                tvHotBookName2.setText(list.get(hotBookIndex).getBookName());
-                Glide.with(HomeActivity.this).load(list.get(hotBookIndex).getBookImgUrl()).into(ivHotBook2);
-                ivHotBook2.setOnClickListener(new View.OnClickListener() {
+                hotBookList.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+                hotBookList.setAdapter(new HotBookAdapter(list, new HotBookAdapter.OnStateTextClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(BookEntity bookEntity) {
                         Intent intent = new Intent(HomeActivity.this, SearchResultActivity.class);
-                        intent.putExtra("entity", hotBook2);
+                        intent.putExtra("entity", bookEntity);
                         startActivity(intent);
                     }
-                });
+                }));
 
             }
         });
