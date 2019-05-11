@@ -53,7 +53,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".business.book.SearchResultActivity" />
-        <activity android:name=".business.PersonalDataActivity"></activity>
+        <activity android:name=".business.PersonalDataActivity" />
+        <activity android:name=".business.book.RentStateActivity"></activity>
     </application>
 
 </manifest>

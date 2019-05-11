@@ -50,7 +50,7 @@ public class PersonalDataActivity extends BaseActivity {
         if (!TextUtils.isEmpty(etNickName.getText().toString()) || !TextUtils.isEmpty(etSex.getText().toString())) {
             userEntity.setNikeName(etNickName.getText().toString());
             userEntity.setUserInfo(etSex.getText().toString());
-            userEntity.setPassword(etPhone.getText().toString());
+            userEntity.setMobilePhoneNumber(etPhone.getText().toString());
             userEntity.update(new UpdateListener() {
                 @Override
                 public void done(BmobException e) {

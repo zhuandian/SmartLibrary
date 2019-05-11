@@ -129,10 +129,10 @@ public class HomeActivity extends BaseActivity {
             case R.id.tv_search:
                 String bookName = etBookName.getText().toString();
                 if (TextUtils.isEmpty(bookName)) {
-                    Toast.makeText(this, "请输入书名...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请输入类别...", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(HomeActivity.this, BookDetailActivity.class);
-                    intent.putExtra("bookName", bookName);
+                    Intent intent = new Intent(HomeActivity.this, BookListActivity.class);
+                    intent.putExtra("bookType", bookName);
                     startActivity(intent);
                 }
                 break;
@@ -192,5 +192,9 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tvLogin.setText(Constant.IS_USRE_LOGIN ? "退出" : "登陆");
+    }
 }
