@@ -11,6 +11,15 @@ public class UserEntity extends BmobUser {
     private String nikeName;
     private String userInfo;
     private int roleId;
+    private String sex;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     public int getRoleId() {
         return roleId;

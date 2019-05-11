@@ -88,7 +88,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_recommend"
+        android:id="@+id/tv_personal_data"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_above="@+id/tv_my_list"
@@ -96,7 +96,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/shape_round_button"
         android:gravity="center"
-        android:text="推荐\n书单"
+        android:text="个人\n信息"
         android:textColor="@color/white" />
 
     <TextView

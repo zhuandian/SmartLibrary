@@ -53,8 +53,6 @@ public class HomeActivity extends BaseActivity {
     TextView tvCategary;
     @BindView(R.id.banner)
     Banner banner;
-    @BindView(R.id.tv_recommend)
-    TextView tvRecommend;
     @BindView(R.id.tv_my_list)
     TextView tvMyList;
     @BindView(R.id.rv_list)
@@ -122,7 +120,7 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_login, R.id.tv_search, R.id.tv_categary, R.id.tv_recommend, R.id.tv_my_list})
+    @OnClick({R.id.tv_login, R.id.tv_search, R.id.tv_categary, R.id.tv_personal_data, R.id.tv_my_list})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
@@ -141,14 +139,19 @@ public class HomeActivity extends BaseActivity {
             case R.id.tv_categary:
                 showBookCateGaryDialog();
                 break;
-            case R.id.tv_recommend:
+            case R.id.tv_personal_data:
+//                if (Constant.IS_USRE_LOGIN) {
+//                    Intent intent = new Intent(HomeActivity.this, BookListActivity.class);
+//                    intent.putExtra("bookType", Constant.USER_LIKE_BOOK_TYPE);
+//                    startActivity(intent);
+//                    Toast.makeText(this, String.format("根据您的浏览习惯，为您推荐了 %s 类型数据", Constant.USER_LIKE_BOOK_TYPE), Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(this, "请先登录...", Toast.LENGTH_SHORT).show();
+//                }
                 if (Constant.IS_USRE_LOGIN) {
-                    Intent intent = new Intent(HomeActivity.this, BookListActivity.class);
-                    intent.putExtra("bookType", Constant.USER_LIKE_BOOK_TYPE);
-                    startActivity(intent);
-                    Toast.makeText(this, String.format("根据您的浏览习惯，为您推荐了 %s 类型数据", Constant.USER_LIKE_BOOK_TYPE), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(HomeActivity.this, PersonalDataActivity.class));
                 } else {
-                    Toast.makeText(this, "请先登录...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请先登录..", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
