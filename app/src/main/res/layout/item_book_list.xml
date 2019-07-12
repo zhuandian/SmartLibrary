@@ -48,9 +48,9 @@
         android:id="@+id/tv_book_borrow"
         android:layout_width="50dp"
         android:layout_height="30dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:layout_toLeftOf="@+id/tv_book_state"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="续借"
@@ -60,9 +60,9 @@
         android:id="@+id/tv_book_state"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
+        android:layout_toLeftOf="@+id/tv_book_borrow"
         android:background="@color/colorAccent"
         android:gravity="center"
         android:text="状态"
@@ -72,7 +72,6 @@
     <TextView
         android:id="@+id/tv_book_sold_out"
         android:layout_width="60dp"
-        android:visibility="gone"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -80,5 +79,6 @@
         android:background="#999999"
         android:gravity="center"
         android:text="已报废"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 </RelativeLayout>

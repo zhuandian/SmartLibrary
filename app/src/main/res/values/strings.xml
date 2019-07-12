@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">高校图书馆数据推荐系统</string>
+    <string name="app_name">图书借阅推荐系统</string>
     <string name="app_info">图书管理系统</string>
 </resources>

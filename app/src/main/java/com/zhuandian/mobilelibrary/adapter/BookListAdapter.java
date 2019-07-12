@@ -54,14 +54,15 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BooKVi
         viewHolder.tvBookState.setText(mDatas.get(i).getBookState() == 1 ? "还书" : "未借");
         viewHolder.tvBookDesc.setText(mDatas.get(i).getBookDesc());
         viewHolder.tvBookTime.setText(mDatas.get(i).getCreatedAt());
-        if (mDatas.get(i).getIsAvailable() == 1) { //图书可借阅
-            viewHolder.tvBookSoldOut.setVisibility(View.GONE);
-            viewHolder.tvBookState.setVisibility(View.VISIBLE);
-            viewHolder.tvBookBorrow.setVisibility(View.VISIBLE);
-        } else { //图书已报废，不可借
+        if (mDatas.get(i).getIsAvailable() == 2) { //图书已报废，不可借
             viewHolder.tvBookSoldOut.setVisibility(View.VISIBLE);
             viewHolder.tvBookState.setVisibility(View.GONE);
             viewHolder.tvBookBorrow.setVisibility(View.GONE);
+        } else { //图书可借阅
+            viewHolder.tvBookSoldOut.setVisibility(View.GONE);
+            viewHolder.tvBookState.setVisibility(View.VISIBLE);
+            viewHolder.tvBookBorrow.setVisibility(View.VISIBLE);
+
         }
         viewHolder.tvBookBorrow.setVisibility(mDatas.get(i).getBookState() == 1 ? View.VISIBLE : View.GONE);
         viewHolder.tvBookState.setOnClickListener(new View.OnClickListener() {
